@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Saray City
 
-## Getting Started
+Next.js restaurant website with Uzbek, Russian, and English routes:
 
-First, run the development server:
+- `/uz`, `/ru`, `/en` — localized homepages
+- `/{locale}/menu` — full Mison menu with category filters
+- `/{locale}/contacts` — restaurant contacts and table reservation form
+
+The menu is stored in `src/data.js`. Product IDs are local sequential IDs; downloaded product images are served from `/images/menu/{id}.png`. Menu names and prices are imported from the public Mison menu API. Names remain in the Russian language supplied by that source; category labels and page content are localized.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Telegram reservation settings belong in `.env.local`:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- `TELEGRAM_BOT_TOKEN` — the restaurant bot token.
+- `TELEGRAM_ADMIN_CHAT_ID` — the admin or group chat ID.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`.env.example` contains blank placeholders only. Never commit Telegram credentials or expose them through `NEXT_PUBLIC_*` variables. The form submits to `POST /api/reservations`; the endpoint validates the form and sends the reservation to Telegram.
 
-## Learn More
+## Checks
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npm run build
+```
